@@ -65,10 +65,8 @@ public class VendingMachineCLI {
                 System.out.println("Please Select Corresponding Code: \n");
                 productCode = userInput.nextLine();
                 inventory.subtractInventory(productCode);
-                mrMoney.vendItem(productCode);
+                mrMoney.vendAndChargeMoney(productCode);
                 mrMoney.printReceipt(inventory.itemChoices.get(productCode));
-                ItemForSale item = inventory.itemChoices.get(productCode);
-                mrMoney.printReceipt(item); //"*call dispense here, which will also print item name, cost, and balance, along with sound of item");
             } else {
             //charge money
             //make change

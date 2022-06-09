@@ -17,6 +17,10 @@ public class Inventory {
         this.itemChoices = new LinkedHashMap<>();
     }
 
+    public Map<String, ItemForSale> getItemChoices() {
+        return itemChoices;
+    }
+
     public void inventorySetUp() {
         try (Scanner dataInput = new Scanner(file)) {
             while (dataInput.hasNextLine()) {
