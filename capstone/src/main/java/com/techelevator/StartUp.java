@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class StartUp {
 
     StartUp() {
         this.file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
-        this.itemChoices = new HashMap<>();
+        this.itemChoices = new LinkedHashMap<>();
     }
 
     public Map<String, ItemForSale> getItemChoices() {
@@ -32,19 +33,19 @@ public class StartUp {
                 String type = itemArray[3];
                 if (type.equals("Chip")) {
                     Chip item = new Chip(slotLocation, productName, price, type);
-                    itemChoices.put(productName, item);
+                    itemChoices.put(slotLocation, item);
                 }
                 if (type.equals("Candy")) {
                     Candy item = new Candy(slotLocation, productName, price, type);
-                    itemChoices.put(productName, item);
+                    itemChoices.put(slotLocation, item);
                 }
                 if (type.equals("Drink")) {
                     Drink item = new Drink(slotLocation, productName, price, type);
-                    itemChoices.put(productName, item);
+                    itemChoices.put(slotLocation, item);
                 }
                 if (type.equals("Gum")) {
                     Gum item = new Gum(slotLocation, productName, price, type);
-                    itemChoices.put(productName, item);
+                    itemChoices.put(slotLocation, item);
                 }
             }
         } catch (FileNotFoundException fnf) {

@@ -2,6 +2,7 @@ package com.techelevator;
 
 import javax.sound.midi.Soundbank;
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
@@ -26,6 +27,7 @@ public class VendingMachineCLI {
     public void run() {
         StartUp start = new StartUp();
         start.inventorySetUp();
+        MoneyHandler mrMoney = new MoneyHandler();
 
         System.out.println("\nWelcome to the vending machine!\n");  // aka greeting
         while (mainMenu) {
@@ -53,10 +55,20 @@ public class VendingMachineCLI {
             if (productMenuChoice.equals("1")) {
                 System.out.println("Please enter number of dollars you would like to feed:");
                 dollarsFedIn = userInput.nextLine();
+                mrMoney.addMoney(dollarsFedIn);
+
+
             } else if (productMenuChoice.equals("2")) {
-                System.out.println("Your balance is: *insert getBalance here");
+                System.out.println("Your balance is: " + mrMoney.getBalance());
                 System.out.println("Select purchase **items will be displayed with their prices and codes");
                 productCode = userInput.nextLine();
+                for (Map.Entry<String, ItemForSale> entry : start.itemChoices.entrySet()) {
+                    if(entry.getKey().equals(productCode)) {
+                        ItemForSale item = entry.getValue();
+                        mrMoney.chargeMoney(item);
+                    }
+                }
+                start.itemChoices.containsKey(productCode);
                 System.out.println("*call dispense here, which will also print item name, cost, and balance, along with sound of item");
 
                 // ^^^ this transaction should all take place in ShowRunner and/or MoneyHandler probably MoneyHandler
