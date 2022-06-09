@@ -3,23 +3,18 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class StartUp {
+public class Inventory {
     File file;
     Map<String, ItemForSale> itemChoices;
     ;
 
-    StartUp() {
+    Inventory() {
         this.file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
         this.itemChoices = new LinkedHashMap<>();
-    }
-
-    public Map<String, ItemForSale> getItemChoices() {
-        return itemChoices;
     }
 
     public void inventorySetUp() {
@@ -52,15 +47,35 @@ public class StartUp {
             System.out.println("file not available");
         }
     }
-    public void displayInventory() {
-        System.out.println("Slot:     Product:      Price:     Inventory");
+    public void displayAllInventoryData() {
+        System.out.println("Slot:           Product:    Price:   Inventory:");
         for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
             ItemForSale item = entry.getValue();
             String itemSlot = item.getSlotLocation();
             String itemName = item.getProductName();
             BigDecimal itemPrice = item.getPrice();
             int itemInventory = item.getInventory();
-            System.out.println(itemSlot + "\t" + itemName + "\t\t\t" + itemPrice + "\t\t\t" + itemInventory);
+            System.out.printf("%3s %20s %8s %6s\n", itemSlot, itemName, itemPrice.toString(), String.valueOf(itemInventory));
+        }
+    }
+
+    public void displayNameAndInventory() {
+        System.out.println("       Product:   Inventory:");
+        for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
+            ItemForSale item = entry.getValue();
+            String itemName = item.getProductName();
+            int itemInventory = item.getInventory();
+            System.out.printf("%18s  %3s\n", itemName, String.valueOf(itemInventory));
+        }
+    }
+
+    public void subtractInventory(String productCode) {
+        for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
+            String key = entry.getKey();
+            ItemForSale item = entry.getValue();
+            if (key.equals(productCode)) {
+                item.setInventory(item.getInventory() - 1);
+            }
         }
     }
 }

@@ -2,16 +2,17 @@ package com.techelevator;
 
 import javax.sound.midi.Soundbank;
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
-// any instance variables will go here
+    // any instance variables will go here
     boolean mainMenu = true;
     boolean purchaseMenu = true;
     String dollarsFedIn;
     String productCode;
-
 
 
     public VendingMachineCLI() {
@@ -25,8 +26,8 @@ public class VendingMachineCLI {
 
     // program code should be written in public void run block
     public void run() {
-        StartUp start = new StartUp();
-        start.inventorySetUp();
+        Inventory inventory = new Inventory();
+        inventory.inventorySetUp();
         MoneyHandler mrMoney = new MoneyHandler();
 
         System.out.println("\nWelcome to the vending machine!\n");  // aka greeting
@@ -37,7 +38,7 @@ public class VendingMachineCLI {
             System.out.println("Enter a number: \n(1) Display Vending Machine Items \n(2) Purchase \n(3) Exit");
             String mainMenuChoice = userInput.nextLine();
             if (mainMenuChoice.equals("1")) {
-                start.displayInventory();
+                inventory.displayNameAndInventory();
             } else if (mainMenuChoice.equals("2")) {
                 mainMenu = false;
             } else {
@@ -60,30 +61,27 @@ public class VendingMachineCLI {
 
             } else if (productMenuChoice.equals("2")) {
                 System.out.println("Your balance is: " + mrMoney.getBalance());
-                System.out.println("Select purchase **items will be displayed with their prices and codes");
+                inventory.displayAllInventoryData();
+                System.out.println("Please Select Corresponding Code: \n");
                 productCode = userInput.nextLine();
-                for (Map.Entry<String, ItemForSale> entry : start.itemChoices.entrySet()) {
-                    if(entry.getKey().equals(productCode)) {
-                        ItemForSale item = entry.getValue();
-                        mrMoney.chargeMoney(item);
-                    }
-                }
-                start.itemChoices.containsKey(productCode);
-                System.out.println("*call dispense here, which will also print item name, cost, and balance, along with sound of item");
-
-                // ^^^ this transaction should all take place in ShowRunner and/or MoneyHandler probably MoneyHandler
+                inventory.subtractInventory(productCode);
+                mrMoney.vendItem(productCode);
+                mrMoney.printReceipt(inventory.itemChoices.get(productCode));
+                ItemForSale item = inventory.itemChoices.get(productCode);
+                mrMoney.printReceipt(item); //"*call dispense here, which will also print item name, cost, and balance, along with sound of item");
             } else {
-                //charge money
-                //make change
-                //return change
-                System.out.println("Your change is ...\n");
-                System.out.println("Thank you, come again!");
-                purchaseMenu = false;
-            }
+            //charge money
+            //make change
 
-
+            //return change
+            System.out.println("Your change is ...\n");
+            System.out.println("Thank you, come again!");
+            purchaseMenu = false;
         }
 
+
     }
+
+}
 
 }

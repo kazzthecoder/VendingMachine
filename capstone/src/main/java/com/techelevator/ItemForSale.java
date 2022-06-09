@@ -35,4 +35,8 @@ public class ItemForSale {  //ABSTRACT
     public int getInventory() {
         return inventory;
     }
+
+    public void setInventory(int newInventory) {
+        this.inventory = newInventory;
+    }
 }
