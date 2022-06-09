@@ -3,16 +3,25 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class StartUp{
-    Map<String, ItemForSale> itemChoices = new HashMap<>();
+public class StartUp {
+    File file;
+    Map<String, ItemForSale> itemChoices;
+    ;
 
-    public static void main(String[] args) {
+    StartUp() {
+        this.file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
+        this.itemChoices = new HashMap<>();
+    }
 
-        File file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
-        Map<String, ItemForSale> itemChoices = new HashMap<>();
+    public Map<String, ItemForSale> getItemChoices() {
+        return itemChoices;
+    }
 
+    public void inventorySetUp() {
         try (Scanner dataInput = new Scanner(file)) {
             while (dataInput.hasNextLine()) {
                 String itemLine = dataInput.nextLine();
@@ -21,7 +30,6 @@ public class StartUp{
                 String productName = itemArray[1];
                 BigDecimal price = new BigDecimal(itemArray[2]);
                 String type = itemArray[3];
-
                 if (type.equals("Chip")) {
                     Chip item = new Chip(slotLocation, productName, price, type);
                     itemChoices.put(productName, item);
@@ -36,19 +44,38 @@ public class StartUp{
                 }
                 if (type.equals("Gum")) {
                     Gum item = new Gum(slotLocation, productName, price, type);
-                    itemChoices.put(productName,item);
+                    itemChoices.put(productName, item);
                 }
             }
         } catch (FileNotFoundException fnf) {
             System.out.println("file not available");
         }
-        for ( Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
-            String key = entry.getKey();
+    }
+    public void displayInventory() {
+        System.out.println("Slot:     Product:      Price:     Inventory");
+        for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
             ItemForSale item = entry.getValue();
-             String slotLocation2 = item.getSlotLocation();
-            System.out.println(key + " " + slotLocation2);
-
+            String itemSlot = item.getSlotLocation();
+            String itemName = item.getProductName();
+            BigDecimal itemPrice = item.getPrice();
+            int itemInventory = item.getInventory();
+            System.out.println(itemSlot + "\t" + itemName + "\t\t\t" + itemPrice + "\t\t\t" + itemInventory);
         }
-
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
