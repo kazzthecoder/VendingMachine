@@ -15,6 +15,7 @@ public class MoneyHandler {
     //methods
     public void addMoney(String dollars) {
         BigDecimal stringBalance = new BigDecimal(dollars);
+
         balance = balance.add(stringBalance);
 
     }

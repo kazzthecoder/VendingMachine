@@ -29,6 +29,7 @@ public class VendingMachineCLI {
         Inventory inventory = new Inventory();
         inventory.inventorySetUp();
         MoneyHandler mrMoney = new MoneyHandler();
+        Logger mrLogger = new Logger();
 
         System.out.println("\nWelcome to the vending machine!\n");  // aka greeting
         while (mainMenu) {
@@ -57,6 +58,7 @@ public class VendingMachineCLI {
                 System.out.println("Please enter number of dollars you would like to feed:");
                 dollarsFedIn = userInput.nextLine();
                 mrMoney.addMoney(dollarsFedIn);
+                mrLogger.logMoneyIn(dollarsFedIn, mrMoney.getBalance());
 
 
             } else if (productMenuChoice.equals("2")) {
@@ -67,6 +69,10 @@ public class VendingMachineCLI {
                 inventory.subtractInventory(productCode);
                 mrMoney.vendAndChargeMoney(productCode);
                 mrMoney.printReceipt(inventory.itemChoices.get(productCode));
+                BigDecimal logPrice = inventory.itemChoices.get(productCode).getPrice();
+                String logName = inventory.itemChoices.get(productCode).getProductName();
+                mrLogger.logVendItem(logName,productCode, logPrice, mrMoney.getBalance());
+
             } else {
             //charge money
             //make change
