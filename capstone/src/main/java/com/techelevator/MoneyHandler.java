@@ -34,16 +34,16 @@ public class MoneyHandler {
 
     public String printReceipt(ItemForSale item) {
         if (item.getType().equals("Chip")) {
-            receipt = (item.getProductName() + " " + item.getPrice() + " " + getBalance() + " " + "Crunch Crunch, Yum!");
+            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " " + "Crunch Crunch, Yum!");
             System.out.println(receipt);
         } else if (item.getType().equals("Candy")) {
-            receipt = (item.getProductName() + " " + item.getPrice() + " " + getBalance() + " " + "Munch Munch, Yum!");
+            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " " +"Munch Munch, Yum!");
             System.out.println(receipt);
         } else if (item.getType().equals("Drink")) {
-            receipt = (item.getProductName() + " " + item.getPrice() + " " + getBalance() + " " + "Glug Glug, Yum!");
+            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " "+ "Glug Glug, Yum!");
             System.out.println(receipt);
         } else if (item.getType().equals("Gum")) {
-            receipt = (item.getProductName() + " " + item.getPrice() + " " + getBalance() + " " + "Chew Chew, Yum!");
+            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " " + "Chew Chew, Yum!");
             System.out.println(receipt);
         }
         return null;
