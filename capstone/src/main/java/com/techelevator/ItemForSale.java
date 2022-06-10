@@ -8,14 +8,17 @@ public class ItemForSale {
     private BigDecimal price;
     private String type;
     private int inventory;
+    private String sound;
 
 
-    ItemForSale(String slotLocation, String productName, BigDecimal price, String type) {
+    ItemForSale(String slotLocation, String productName, BigDecimal price, String type, String sound) {
         this.slotLocation = slotLocation;
         this.productName = productName;
         this.price = price;
         this.type = type;
         this.inventory = 5;
+        this.sound  = sound;
+
     }
 
     public String getSlotLocation() {
@@ -35,6 +38,8 @@ public class ItemForSale {
     public int getInventory() {
         return inventory;
     }
+
+    public String getSound() {return sound;}
 
     public void setInventory(int newInventory) {
         this.inventory = newInventory;

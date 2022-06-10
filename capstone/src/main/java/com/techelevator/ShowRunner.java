@@ -68,7 +68,7 @@ public class ShowRunner {
                 inventory.displayAllInventoryData();
                 System.out.println("Please Select Corresponding Code: \n");
                 String productCode = userInput.nextLine().toUpperCase();
-                mrMoney.vendAndChargeMoney(productCode);
+                mrMoney.vendAndChargeMoney(productCode, inventory);
                 inventory.subtractInventory(productCode);
                 mrMoney.printReceipt(inventory.getItemChoices().get(productCode));
                 BigDecimal logPrice = inventory.getItemChoices().get(productCode).getPrice();

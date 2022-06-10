@@ -26,35 +26,31 @@ public class MoneyHandler {
 
     }
 
-    public void vendAndChargeMoney(String productCode) {
-        Inventory inventory = new Inventory();
-        inventory.inventorySetUp();
+    public void vendAndChargeMoney(String productCode, Inventory inventory) {
         for (Map.Entry<String, ItemForSale> entry : inventory.getItemChoices().entrySet()) {
             if (entry.getKey().equals(productCode)) {
                 ItemForSale item = entry.getValue();
                 BigDecimal itemPrice = item.getPrice();
-                if(balance.compareTo(itemPrice) >= 0) {
-                    balance = balance.subtract(itemPrice);
-                } else {
+
+                if ((balance.compareTo(itemPrice) < 0)) {
                     System.out.println("INSUFFICIENT FUNDS!! Please select another option...");
                 }
+                else if ((item.getInventory() < 1)){
+                    System.out.println("SOLD OUT! Please select another item.");
+                }
+                balance = balance.subtract(itemPrice);
             }
         }
     }
 
-    public void printReceipt(@NotNull ItemForSale item) {
-        if(item.getInventory() == 0) {
-            receipt = "SOLD OUT!! Please select another option...";
-        }
-        else if (item.getType().equals("Chip")) {
-            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() + "  Crunch Crunch, Yum!");
-        } else if (item.getType().equals("Candy")) {
-            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() + "  Munch Munch, Yum!");
-        } else if (item.getType().equals("Drink")) {
-            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() + "  Glug Glug, Yum!");
-        } else if (item.getType().equals("Gum")) {
-            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() +  "  Chew Chew, Yum!");
-        }
+    public void printReceipt (ItemForSale item) {
+//        if(item.getInventory() == 0) {
+//            receipt = "SOLD OUT!! Please select another option...";
+//        }
+//        else {
+            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:  $" + getBalance() + " " + item.getSound());
+//        }
+
         System.out.println(receipt);
     }
 

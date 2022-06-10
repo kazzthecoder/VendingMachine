@@ -106,14 +106,12 @@ public class Inventory {
     public void subtractInventory(String productCode) {
         ItemForSale item = itemChoices.get(productCode);
         int currentInventory = item.getInventory();
-        if (currentInventory == 0) {
-            System.out.println("SOLD OUT!!");;
-        } else  {
+        if (currentInventory > 0) {
             item.setInventory(currentInventory - 1);
-
+        }
         }
     }
-}
+
 
 
 
