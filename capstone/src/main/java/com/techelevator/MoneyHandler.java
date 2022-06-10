@@ -8,6 +8,9 @@ import java.util.Map;
 public class MoneyHandler {
     BigDecimal balance = BigDecimal.ZERO;
     String receipt;
+    public MoneyHandler() {
+
+    }
 
 
     public BigDecimal getBalance() {
@@ -26,7 +29,7 @@ public class MoneyHandler {
 
     }
 
-    public void vendAndChargeMoney(String productCode, Inventory inventory) {
+    public void chargeMoney(String productCode, Inventory inventory) {
         for (Map.Entry<String, ItemForSale> entry : inventory.getItemChoices().entrySet()) {
             if (entry.getKey().equals(productCode)) {
                 ItemForSale item = entry.getValue();
@@ -37,6 +40,7 @@ public class MoneyHandler {
                 }
                 else if ((item.getInventory() < 1)){
                     System.out.println("SOLD OUT! Please select another item.");
+                    break;
                 }
                 balance = balance.subtract(itemPrice);
             }

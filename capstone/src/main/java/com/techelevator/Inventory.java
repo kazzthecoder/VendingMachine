@@ -12,7 +12,7 @@ public class Inventory {
     private Map<String, ItemForSale> itemChoices;
     ;
 
-    Inventory() {
+     Inventory() {
         this.file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
         this.itemChoices = new LinkedHashMap<>();
         try (Scanner dataInput = new Scanner(file)) {

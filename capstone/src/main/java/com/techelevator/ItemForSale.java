@@ -19,8 +19,10 @@ public class ItemForSale {
         this.inventory = 5;
         this.sound  = sound;
 
-    }
+    } // this is for test purposes only
+    public ItemForSale () {
 
+    }
     public String getSlotLocation() {
         return slotLocation;
     }
