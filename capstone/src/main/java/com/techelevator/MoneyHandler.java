@@ -1,5 +1,7 @@
 package com.techelevator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -10,6 +12,10 @@ public class MoneyHandler {
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     //methods
@@ -27,28 +33,32 @@ public class MoneyHandler {
             if (entry.getKey().equals(productCode)) {
                 ItemForSale item = entry.getValue();
                 BigDecimal itemPrice = item.getPrice();
-                balance = balance.subtract(itemPrice);
-
+                if(balance.compareTo(itemPrice) >= 0) {
+                    balance = balance.subtract(itemPrice);
+                } else {
+                    System.out.println("INSUFFICIENT FUNDS!! Please select another option...");
+                }
             }
         }
     }
 
-    public String printReceipt(ItemForSale item) {
-        if (item.getType().equals("Chip")) {
-            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " " + "Crunch Crunch, Yum!");
-            System.out.println(receipt);
-        } else if (item.getType().equals("Candy")) {
-            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " " +"Munch Munch, Yum!");
-            System.out.println(receipt);
-        } else if (item.getType().equals("Drink")) {
-            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " "+ "Glug Glug, Yum!");
-            System.out.println(receipt);
-        } else if (item.getType().equals("Gum")) {
-            receipt = ("Product: " + item.getProductName() + " Item Price: " + item.getPrice() + " Current Balance: " + getBalance() + " " + "Chew Chew, Yum!");
-            System.out.println(receipt);
+    public void printReceipt(@NotNull ItemForSale item) {
+        if(item.getInventory() == 0) {
+            receipt = "SOLD OUT!! Please select another option...";
         }
-        return null;
+        else if (item.getType().equals("Chip")) {
+            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() + "  Crunch Crunch, Yum!");
+        } else if (item.getType().equals("Candy")) {
+            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() + "  Munch Munch, Yum!");
+        } else if (item.getType().equals("Drink")) {
+            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() + "  Glug Glug, Yum!");
+        } else if (item.getType().equals("Gum")) {
+            receipt = (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:$" + getBalance() +  "  Chew Chew, Yum!");
+        }
+        System.out.println(receipt);
     }
+
+
 
 
 }
