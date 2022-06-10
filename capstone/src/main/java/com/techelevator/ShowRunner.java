@@ -77,8 +77,8 @@ public class ShowRunner {
 
             } else if (productMenuChoice.equals("3")) {
                 BigDecimal finalBalance = coins.makeChange(mrMoney.getBalance());
-                mrMoney.setBalance(BigDecimal.ZERO);
                 mrLogger.logGiveChange(mrMoney.getBalance(),finalBalance);
+                mrMoney.setBalance(BigDecimal.ZERO);
                 purchaseMenuOn = false;
                 mainMenuOn = true;
                 openMainMenu();

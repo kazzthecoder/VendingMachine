@@ -26,7 +26,7 @@ public class Logger {
 
     public void logVendItem(String itemVended, String slotVended, BigDecimal costVended, BigDecimal balanceVended) {
         try (PrintWriter logOutput = new PrintWriter(new FileOutputStream((LOG_FILE), true))) {
-            logOutput.printf(TIME_STAMP + " %s %s %.2f %.2f\n", itemVended, slotVended, costVended, balanceVended);
+            logOutput.printf(TIME_STAMP + " %s %s $%.2f $%.2f\n", itemVended, slotVended, costVended, balanceVended);
         } catch (FileNotFoundException fnf) {
             System.out.println("The file was not found");
         }
@@ -34,7 +34,7 @@ public class Logger {
 
     public void logGiveChange(BigDecimal balanceBefore, BigDecimal balanceAfter) {
         try (PrintWriter logOutput = new PrintWriter(new FileOutputStream((LOG_FILE), true))) {
-            logOutput.printf(TIME_STAMP + " GIVE CHANGE: %.2f %.2f\n",balanceBefore, balanceAfter);
+            logOutput.printf(TIME_STAMP + " GIVE CHANGE: $%.2f $%.2f\n",balanceBefore, balanceAfter);
         } catch (FileNotFoundException fnf) {
             System.out.println("The file was not found");
         }
