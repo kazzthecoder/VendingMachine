@@ -15,6 +15,10 @@ public class Coins {
     Coins() {
     }
 
+    public BigDecimal getNICKEL() {
+        return NICKEL;
+    }
+
     public BigDecimal makeChange(BigDecimal balance) {
         BigDecimal[] currencies = new BigDecimal[]{QUARTER, DIME, NICKEL};
         String[] nameOfChange = new String[]{"Quarters", "Dimes", "Nickels"};
