@@ -89,7 +89,7 @@ public class Inventory {
             String itemName = item.getProductName();
             BigDecimal itemPrice = item.getPrice();
             int itemInventory = item.getInventory();
-            System.out.printf("%3s %20s %8s %6s\n", itemSlot, itemName, itemPrice.toString(), String.valueOf(itemInventory));
+            System.out.printf("%3s %20s %8s %6s\n", itemSlot, itemName, "$" + itemPrice.toString(), String.valueOf(itemInventory));
         }
     }
 
