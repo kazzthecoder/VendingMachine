@@ -82,15 +82,17 @@ public class Inventory {
     }
 
     public void displayAllInventoryData() {
-        System.out.println("Slot:           Product:    Price:    Inventory:");
+        System.out.printf(" %-7s %-20s %-10s %-12s\n", "Slot:", "Product:","Price:","Inventory:");
+        System.out.println(" _____________________________________________________");
         for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
             ItemForSale item = entry.getValue();
             String itemSlot = item.getSlotLocation();
             String itemName = item.getProductName();
             BigDecimal itemPrice = item.getPrice();
             int itemInventory = item.getInventory();
-            System.out.printf("%3s %20s %8s %6s\n", itemSlot, itemName, "$" + itemPrice.toString(), String.valueOf(itemInventory));
+            System.out.printf("| %-7s %-20s %-10s %-12s|\n", itemSlot, itemName, "$" + itemPrice.toString(), String.valueOf(itemInventory));
         }
+        System.out.println(" _____________________________________________________");
     }
 
     public void displayNameAndInventory() {
