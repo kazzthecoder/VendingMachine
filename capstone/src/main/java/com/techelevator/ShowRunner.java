@@ -23,7 +23,7 @@ public class ShowRunner {
         this.mainMenuScript = "\n\n***MAIN MENU***\n\n Please select a number: \n\n(1) Display Vending Machine Items \n(2) Purchase \n(3) Exit\n\n";
         this.purchaseMenuScript = "\n\n***PURCHASE MENU***\n\nPlease select a number: \n\n(1) Feed Money \n(2) Purchase Item \n(3) Finish Transaction\n\n";
         this.moneyFeedPrompt = "\nPlease enter number of dollars you would like to feed:\n\n";
-        this.optionUnavailable = "\n1Invalid input! Please enter a valid number!\n";
+        this.optionUnavailable = "\nInvalid input! Please enter a valid number!\n";
         this.mainMenuOn = true;
         this.purchaseMenuOn = true;
         this.inventory = new Inventory();
@@ -44,7 +44,7 @@ public class ShowRunner {
             } else if (mainMenuChoice.equals("2")) {
                 mainMenuOn = false;
             } else if(mainMenuChoice.equals("3")) {
-                System.out.println("Goodbye! Please come again!");
+                System.out.println("\nGoodbye! Please come again!");
                 mainMenuOn = true;
                 purchaseMenuOn = false;
                 break;
@@ -66,16 +66,16 @@ public class ShowRunner {
                 BigDecimal dollarCheck = new BigDecimal(dollarsFedIn);
 
                 if (dollarCheck.compareTo(BigDecimal.ZERO) <= 0) {
-                    System.out.println("Silly you, can't add negative money.  Try again.");
+                    System.out.println("\nSilly you, can't add negative money.  Try again.");
                 } else if (dollarCheck.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
-                    System.out.println("You can only add whole dollars.  Please try again.");
+                    System.out.println("\nYou can only add whole dollars.  Please try again.");
                 } else {
                     mrMoney.addMoney(dollarsFedIn);
                     mrLogger.logMoneyIn(dollarsFedIn, mrMoney.getBalance());
                 }
 
             } else if (productMenuChoice.equals("2")) {
-                System.out.println("\nYour balance is: $" + mrMoney.getBalance() + "\n");
+                System.out.printf("\nYour balance is: $%.2f\n\n", mrMoney.getBalance());
                 inventory.displayAllInventoryData();
                 System.out.println("\nPlease Enter a Slot: \n");
                 String productCode = userInput.nextLine().toUpperCase();

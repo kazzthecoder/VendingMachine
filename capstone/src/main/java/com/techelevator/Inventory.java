@@ -96,7 +96,7 @@ public class Inventory {
     }
 
     public void displayNameAndInventory() {
-        System.out.println("  Product:        Inventory:");
+        System.out.println("\nProduct:        Inventory:");
         for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
             ItemForSale item = entry.getValue();
             String itemName = item.getProductName();
