@@ -3,17 +3,18 @@ package com.techelevator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Inventory {
-    private File file;
+    private File file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
     private Map<String, ItemForSale> itemChoices;
     ;
 
-     Inventory() {
-        this.file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
+     Inventory(File file) {
+         file = new File("C:\\Users\\Student\\workspace\\capstone-1-team-02\\capstone\\vendingmachine.csv");
         this.itemChoices = new LinkedHashMap<>();
         try (Scanner dataInput = new Scanner(file)) {
             while (dataInput.hasNextLine()) {
@@ -43,6 +44,10 @@ public class Inventory {
         } catch (FileNotFoundException fnf) {
             System.out.println("file not available");
         }
+    }
+
+    public Inventory() {
+
     }
 
 
@@ -95,14 +100,18 @@ public class Inventory {
         System.out.println(" _____________________________________________________");
     }
 
-    public void displayNameAndInventory() {
+    public HashMap<String,Integer> displayNameAndInventory() {
         System.out.println("\nProduct:        Inventory:");
+        Map<String, Integer> nameInventoryMap = new LinkedHashMap<>();
         for (Map.Entry<String, ItemForSale> entry : itemChoices.entrySet()) {
             ItemForSale item = entry.getValue();
             String itemName = item.getProductName();
             int itemInventory = item.getInventory();
             System.out.printf("%18s  %3s\n", itemName, String.valueOf(itemInventory));
+            nameInventoryMap.put(itemName,item.getInventory());
+
         }
+        return (HashMap<String, Integer>) nameInventoryMap;
     }
 
     public void subtractInventory(String productCode) {

@@ -3,11 +3,13 @@ package com.techelevator;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 
 public class MoneyHandler {
     BigDecimal balance = BigDecimal.ZERO;
     String receipt;
+
     public MoneyHandler() {
 
     }
@@ -22,9 +24,14 @@ public class MoneyHandler {
     }
 
 
-    public void addMoney(String dollars) {
-        BigDecimal stringBalance = new BigDecimal(dollars);
-        balance = balance.add(stringBalance);
+    public BigDecimal addMoney(String dollars) {
+        BigDecimal bigDollar = new BigDecimal(dollars);
+        if (bigDollar.compareTo(BigDecimal.ZERO) >= 0) {
+            BigDecimal stringBalance = new BigDecimal(dollars);
+            balance = balance.add(stringBalance);
+            return balance;
+        }
+        return balance;
 
     }
 
@@ -36,8 +43,7 @@ public class MoneyHandler {
 
                 if ((balance.compareTo(itemPrice) < 0)) {
                     System.out.println("INSUFFICIENT FUNDS!! Please select another option...");
-                }
-                else if ((item.getInventory() < 1)){
+                } else if ((item.getInventory() < 1)) {
                     System.out.println("SOLD OUT! Please select another item.");
                     break;
                 }
@@ -46,18 +52,15 @@ public class MoneyHandler {
         }
     }
 
-    public void printReceipt (ItemForSale item) {
-        if(item.getInventory() == 0) {
+    public void printReceipt(ItemForSale item) {
+        if (item.getInventory() == 0) {
             receipt = "\nSorry, " + item.getProductName() + "are out of stock. Please select another option.";
-        }
-        else {
+        } else {
             receipt = "\n" + (item.getProductName() + "  Price:$" + item.getPrice() + "  Current Balance:  $" + getBalance() + " " + item.getSound());
         }
 
         System.out.println(receipt);
     }
-
-
 
 
 }

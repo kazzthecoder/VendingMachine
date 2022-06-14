@@ -1,7 +1,10 @@
 package com.techelevator;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ShowRunner {
@@ -13,9 +16,10 @@ public class ShowRunner {
     Boolean mainMenuOn;
     Boolean purchaseMenuOn;
     Inventory inventory;
-    MoneyHandler mrMoney;
-    Logger mrLogger;
+    MoneyHandler moneyHandler;
+    Logger logger;
     Coins coins;
+    Scanner scanner = new Scanner(System.in);
 
 
     ShowRunner() {
@@ -24,26 +28,33 @@ public class ShowRunner {
         this.purchaseMenuScript = "\n\n***PURCHASE MENU***\n\nPlease select a number: \n\n(1) Feed Money \n(2) Purchase Item \n(3) Finish Transaction\n\n";
         this.moneyFeedPrompt = "\nPlease enter number of dollars you would like to feed:\n\n";
         this.optionUnavailable = "\nInvalid input! Please enter a valid number!\n";
-        this.mainMenuOn = true;
+        this.mainMenuOn = false;
         this.purchaseMenuOn = true;
         this.inventory = new Inventory();
-        this.mrMoney = new MoneyHandler();
-        this.mrLogger = new Logger();
+        this.moneyHandler = new MoneyHandler();
+        this.logger = new Logger();
         this.coins = new Coins();
+
     }
 
 
     public void openMainMenu() {
+        ShowRunner showRunner = new ShowRunner();
         System.out.println(mainMenuGreeting);
+        System.out.println(mainMenuScript);
+        mainMenuOn = true;
+
+    }
+
+
+   public  HashMap<String, Integer> mainMenuChoice(String userInput) {
         while (mainMenuOn) {
-            Scanner userInput = new Scanner(System.in);
-            System.out.println(mainMenuScript);
-            String mainMenuChoice = userInput.nextLine();
+            String mainMenuChoice = scanner.nextLine();
             if (mainMenuChoice.equals("1")) {
-                inventory.displayNameAndInventory();
+                return inventory.displayNameAndInventory();
             } else if (mainMenuChoice.equals("2")) {
                 mainMenuOn = false;
-            } else if(mainMenuChoice.equals("3")) {
+            } else if (mainMenuChoice.equals("3")) {
                 System.out.println("\nGoodbye! Please come again!");
                 mainMenuOn = true;
                 purchaseMenuOn = false;
@@ -53,6 +64,7 @@ public class ShowRunner {
                 System.out.println(optionUnavailable);
             }
         }
+        return inventory.displayNameAndInventory();
     }
 
     public void openPurchaseMenu() {
@@ -62,7 +74,7 @@ public class ShowRunner {
             String productMenuChoice = userInput.nextLine();
             if (productMenuChoice.equals("1")) {
                 System.out.println(moneyFeedPrompt);
-                String dollarsFedIn = userInput.nextLine();
+                try {String dollarsFedIn = userInput.nextLine();
                 BigDecimal dollarCheck = new BigDecimal(dollarsFedIn);
 
                 if (dollarCheck.compareTo(BigDecimal.ZERO) <= 0) {
@@ -70,30 +82,32 @@ public class ShowRunner {
                 } else if (dollarCheck.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
                     System.out.println("\nYou can only add whole dollars.  Please try again.");
                 } else {
-                    mrMoney.addMoney(dollarsFedIn);
-                    mrLogger.logMoneyIn(dollarsFedIn, mrMoney.getBalance());
+                    moneyHandler.addMoney(dollarsFedIn);
+                    logger.logMoneyIn(dollarsFedIn, moneyHandler.getBalance());
+                }} catch(NumberFormatException nfe) {
+                    System.out.println("\n Inout Not Valid not try again.");
                 }
 
             } else if (productMenuChoice.equals("2")) {
-                System.out.printf("\nYour balance is: $%.2f\n\n", mrMoney.getBalance());
+                System.out.printf("\nYour balance is: $%.2f\n\n", moneyHandler.getBalance());
                 inventory.displayAllInventoryData();
                 System.out.println("\nPlease Enter a Slot: \n");
                 String productCode = userInput.nextLine().toUpperCase();
-           //     mrMoney.chargeMoney(productCode, inventory);
+                //     mrMoney.chargeMoney(productCode, inventory);
                 try {
                     inventory.subtractInventory(productCode);
-                    mrMoney.chargeMoney(productCode, inventory);
-                    mrMoney.printReceipt(inventory.getItemChoices().get(productCode));
+                    moneyHandler.chargeMoney(productCode, inventory);
+                    moneyHandler.printReceipt(inventory.getItemChoices().get(productCode));
                     BigDecimal logPrice = inventory.getItemChoices().get(productCode).getPrice();
                     String logName = inventory.getItemChoices().get(productCode).getProductName();
-                    mrLogger.logVendItem(logName, productCode, logPrice, mrMoney.getBalance());
+                    logger.logVendItem(logName, productCode, logPrice, moneyHandler.getBalance());
                 } catch (NullPointerException npe) {
                     System.out.println("Not a valid code.");
                 }
             } else if (productMenuChoice.equals("3")) {
-                BigDecimal finalBalance = coins.makeChange(mrMoney.getBalance());
-                mrLogger.logGiveChange(mrMoney.getBalance(),finalBalance);
-                mrMoney.setBalance(BigDecimal.ZERO);
+                BigDecimal finalBalance = coins.makeChange(moneyHandler.getBalance());
+                logger.logGiveChange(moneyHandler.getBalance(), finalBalance);
+                moneyHandler.setBalance(BigDecimal.ZERO);
                 purchaseMenuOn = false;
                 mainMenuOn = true;
                 openMainMenu();
